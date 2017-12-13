@@ -29,9 +29,14 @@ function setUpBoard(){
 
 function addTile() {
 	//place a 2 on a random spot in the board
+
+do {
 	var x = Math.round(Math.random()*3);
 	var y = Math.round(Math.random()*3);
-	grid[x][y] = "2";
+
+} while (grid[x][y] !== "x");
+
+grid[x][y] = "2";
 }
 
 
@@ -66,22 +71,27 @@ document.onkeydown = function(e) {
     if (e.keyCode == UP_ARROW) {
         // up arrow
         moveTilesUp();
+				addTile();
+				combineTilesUp();
         console.log("Pressed up");
     }
     //double equals sign will convert it for us
     else if (e.keyCode == DOWN_ARROW) {
         // down arrow
 				moveTilesDown();
+				addTile();
         console.log("Pressed down");
     }
 		else if (e.keyCode == RIGHT_ARROW) {
 			 // right arrow
 			 moveTilesRight();
+			 addTile();
 			 console.log("Pressed right");
 		}
     else if (e.keyCode == LEFT_ARROW) {
        // left arrow
 			 moveTilesLeft();
+			 addTile();
        console.log("Pressed left");
 		 }
 
@@ -108,6 +118,25 @@ function moveTilesUp()
 
 }
 
+function combineTilesUp()
+{
+	for(var r=grid.length-1; r > 0; r--)
+	{
+			for(var c=grid.length-1; c>= 0; c--)
+				{
+					if(grid[r][c] !== "x" && grid[r-1][c] === grid[r][c]) {
+							grid[r-1][c] =
+							"" + (parseInt(grid[r][c]) + parseInt(grid[r-1][c]));
+							grid[r][c] = "x"
+					}
+
+			}
+
+	}
+
+
+}
+
 function moveTilesDown()
 {
 
@@ -127,13 +156,32 @@ function moveTilesDown()
 
 }
 
+function combineTilesDown()
+{
+	for(var r=grid.length-1; r >= 0; r--)
+	{
+			for(var c=grid.length-1; c>= 0; c--)
+			{
+					if(grid[r][c] !== "x" && grid[r+1][c] === grid[r][c]) {
+							grid[r+1][c] =
+							"" + (parseInt(grid[r][c]) + parseInt(grid[r+1][c]));
+							grid[r][c] = "x"
+					}
+
+			}
+
+	}
+
+
+}
+
+
 function moveTilesRight()
 {
-
-    for(var r=grid.length-1; r >= 0; r--)
-    {
-        for(var c=grid.length-1; c>= 0; c--)
-        {
+	for(var r=grid.length-1; r > 0; r--)
+	{
+			for(var c=grid.length-1; c>= 0; c--)
+				{
             if(c !== 3  && grid[r][c] !== "x" && grid[r][c+1] === "x")
             {
                 grid[r][c+1] = grid[r][c];
@@ -144,6 +192,20 @@ function moveTilesRight()
 
     }
 
+}
+function combineTilesRight()
+{
+	for(var r=grid.length-1; r > 0; r--)
+	{
+			for(var c=grid.length-1; c>= 0; c--)
+			{
+				if(grid[r][c] !== "x" && grid[r-1][c] === grid[r][c]) {
+						grid[r-1][c] =
+						"" + (parseInt(grid[r][c]) + parseInt(grid[r-1][c]));
+						grid[r][c] = "x"
+				}
+			}
+	}
 }
 
 function moveTilesLeft()
@@ -162,5 +224,23 @@ function moveTilesLeft()
         }
 
     }
+
+}
+function combineTilesLeft()
+{
+	for(var r=0; r < grid.length; r++)
+	{
+			for(var c=0; c<grid[r].length; c++)
+			{
+					if(grid[r][c] !== "x" && grid[r-1][c] === grid[r][c]) {
+							grid[r-1][c] =
+							"" + (parseInt(grid[r][c]) + parseInt(grid[r-1][c]));
+							grid[r][c] = "x"
+					}
+
+			}
+
+	}
+
 
 }
