@@ -155,7 +155,7 @@ function combineTilesDown()
 	{
 			for(var c=grid.length-1; c >= 0; c--)
 			{
-				if(grid[r][c] !== "x" && grid[r+1][c] === grid[r][c])
+				if(r !== 3 && grid[r][c] !== "x" && grid[r+1][c] === grid[r][c])
 				{
 						grid[r+1][c] = (parseInt(grid[r][c]) + parseInt(grid[r+1][c]));
 						grid[r][c] = "x";
@@ -218,7 +218,8 @@ function combineTilesLeft()
 	{
 			for(var c=0; c<grid[r].length; c++)
 			{
-				if(grid[r][c] !== "x" && grid[r][c-1] === grid[r][c]) {
+				if(grid[r][c] !== "x" && grid[r][c-1] === grid[r][c])
+				{
 						grid[r][c-1] = (parseInt(grid[r][c]) + parseInt(grid[r][c-1]));
 						grid[r][c] = "x";
 				}
