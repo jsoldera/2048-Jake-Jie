@@ -80,18 +80,21 @@ document.onkeydown = function(e) {
         // down arrow
 				moveTilesDown();
 				addTile();
+				combineTilesDown();
         console.log("Pressed down");
     }
 		else if (e.keyCode == RIGHT_ARROW) {
 			 // right arrow
 			 moveTilesRight();
 			 addTile();
+			 combineTilesRight();
 			 console.log("Pressed right");
 		}
     else if (e.keyCode == LEFT_ARROW) {
        // left arrow
 			 moveTilesLeft();
 			 addTile();
+			 combineTilesLeft();
        console.log("Pressed left");
 		 }
 
@@ -101,7 +104,6 @@ document.onkeydown = function(e) {
 
 function moveTilesUp()
 {
-
     for(var r=0; r < grid.length; r++)
     {
         for(var c=0; c<grid[r].length; c++)
@@ -111,11 +113,8 @@ function moveTilesUp()
                 grid[r-1][c] = grid[r][c];
                 grid[r][c] = "x";
             }
-
         }
-
     }
-
 }
 
 function combineTilesUp()
@@ -124,55 +123,45 @@ function combineTilesUp()
 	{
 			for(var c=grid.length-1; c>= 0; c--)
 				{
-					if(grid[r][c] !== "x" && grid[r-1][c] === grid[r][c]) {
-							grid[r-1][c] =
-							"" + (parseInt(grid[r][c]) + parseInt(grid[r-1][c]));
-							grid[r][c] = "x"
+					if(grid[r][c] !== "x" && grid[r-1][c] === grid[r][c])
+					{
+							grid[r-1][c] = (parseInt(grid[r][c]) + parseInt(grid[r-1][c]));
+							grid[r][c] = "x";
 					}
-
 			}
-
 	}
-
-
 }
+
 
 function moveTilesDown()
 {
 
     for(var r=grid.length-1; r >= 0; r--)
     {
-        for(var c=grid.length-1; c>= 0; c--)
+        for(var c=grid.length-1; c >= 0; c--)
         {
             if(r !== 3  && grid[r][c] !== "x" && grid[r+1][c] === "x")
             {
                 grid[r+1][c] = grid[r][c];
                 grid[r][c] = "x";
             }
-
         }
-
     }
-
 }
 
 function combineTilesDown()
 {
 	for(var r=grid.length-1; r >= 0; r--)
 	{
-			for(var c=grid.length-1; c>= 0; c--)
+			for(var c=grid.length-1; c >= 0; c--)
 			{
-					if(grid[r][c] !== "x" && grid[r+1][c] === grid[r][c]) {
-							grid[r+1][c] =
-							"" + (parseInt(grid[r][c]) + parseInt(grid[r+1][c]));
-							grid[r][c] = "x"
-					}
-
+				if(grid[r][c] !== "x" && grid[r+1][c] === grid[r][c])
+				{
+						grid[r+1][c] = (parseInt(grid[r][c]) + parseInt(grid[r+1][c]));
+						grid[r][c] = "x";
+				}
 			}
-
 	}
-
-
 }
 
 
@@ -187,26 +176,25 @@ function moveTilesRight()
                 grid[r][c+1] = grid[r][c];
                 grid[r][c] = "x";
             }
-
         }
-
     }
-
 }
+
 function combineTilesRight()
 {
 	for(var r=grid.length-1; r > 0; r--)
 	{
 			for(var c=grid.length-1; c>= 0; c--)
 			{
-				if(grid[r][c] !== "x" && grid[r-1][c] === grid[r][c]) {
-						grid[r-1][c] =
-						"" + (parseInt(grid[r][c]) + parseInt(grid[r-1][c]));
-						grid[r][c] = "x"
-				}
+				if(grid[r][c] !== "x" && grid[r][c+1] === grid[r][c])
+				{
+						grid[r][c+1] = (parseInt(grid[r][c]) + parseInt(grid[r][c+1]));
+						grid[r][c] = "x";
+					}
 			}
 	}
 }
+
 
 function moveTilesLeft()
 {
@@ -220,27 +208,20 @@ function moveTilesLeft()
                 grid[r][c-1] = grid[r][c];
                 grid[r][c] = "x";
             }
-
         }
-
     }
-
 }
+
 function combineTilesLeft()
 {
 	for(var r=0; r < grid.length; r++)
 	{
 			for(var c=0; c<grid[r].length; c++)
 			{
-					if(grid[r][c] !== "x" && grid[r-1][c] === grid[r][c]) {
-							grid[r-1][c] =
-							"" + (parseInt(grid[r][c]) + parseInt(grid[r-1][c]));
-							grid[r][c] = "x"
-					}
-
+				if(grid[r][c] !== "x" && grid[r][c-1] === grid[r][c]) {
+						grid[r][c-1] = (parseInt(grid[r][c]) + parseInt(grid[r][c-1]));
+						grid[r][c] = "x";
+				}
 			}
-
 	}
-
-
 }
