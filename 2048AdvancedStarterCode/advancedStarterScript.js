@@ -2,7 +2,11 @@
 //2D array initialized with sample values. To get a blank board initialize all the values to zero
 var board = [[2,4,8,16],[32,64,128,512],[1024,0,0,0],[0,0,0,0]];
 
-
+var UP_ARROW = '38';
+var DOWN_ARROW = '40';
+var LEFT_ARROW = '37';
+var RIGHT_ARROW = '39';
+var R = '82';
 
 //As soon as webpage loads run these two functions
 $(document).ready(function(){
@@ -15,7 +19,7 @@ function printBoard(){
 	for(var i = 0; i < 4; i++){
 		for(var j = 0; j < 4; j++){
 			var boardID = "r"+i+"c"+j;
-			// if the tile is not zero, put it on the board 
+			// if the tile is not zero, put it on the board
 			// else set it to be empty
 			if(board[i][j]!=0){
 				document.getElementById(boardID).innerHTML = board[i][j];
@@ -68,7 +72,120 @@ function printBoard(){
 		}
 	}
 }
-//show students an ascii conversion tool. 
+//show students an ascii conversion tool.
 document.onkeydown = function(e){
 	console.log(e.keyCode);
+
+	if (e.keyCode == UP_ARROW) {
+		moveTilesUp();
+		combineTilesUp();
+		console.log("Pressed up");
+	} else if (e.keyCode == DOWN_ARROW) {
+		// down arrow
+		moveTilesDown();
+		combineTilesDown();
+		console.log("Pressed down");
+	} else if (e.keyCode == RIGHT_ARROW) {
+		moveTilesRight();
+		combineTilesRight();
+		console.log("Pressed right");
+	} else if (e.keyCode == LEFT_ARROW) {
+		moveTilesLeft();
+		combineTilesLeft();
+		console.log("Pressed left");
+	} else if (e.keyCode == R) {
+		//clearBoard();
+		//addTile();
+	}
+	printBoard();
 };
+
+function moveTilesUp() {
+  for (var r = 0; r < board.length; r++) {
+    for (var c = 0; c < board[r].length; c++) {
+      if (r !== 0 && board[r][c] !== 0 && board[r - 1][c] === 0) {
+        board[r - 1][c] = board[r][c];
+        board[r][c] = 0;
+      }
+    }
+  }
+}
+
+function combineTilesUp() {
+  for (var r = board.length - 1; r > 0; r--) {
+    for (var c = board.length - 1; c >= 0; c--) {
+      if (r !== 0 && board[r][c] !== 0 && board[r - 1][c] === board[r][c]) {
+        board[r - 1][c] = (parseInt(board[r][c]) + parseInt(board[r - 1][c]));
+        board[r][c] = 0;
+      }
+    }
+  }
+}
+
+function moveTilesDown() {
+
+  for (var r = board.length - 1; r >= 0; r--) {
+    for (var c = board.length - 1; c >= 0; c--) {
+      if (r !== 3 && board[r][c] !== 0 && board[r + 1][c] === 0) {
+        board[r + 1][c] = board[r][c];
+        board[r][c] = 0;
+      }
+    }
+  }
+}
+
+function combineTilesDown() {
+  for (var r = board.length - 1; r >= 0; r--) {
+    for (var c = board.length - 1; c >= 0; c--) {
+      if (r !== 3 && board[r][c] !== 0 && board[r + 1][c] === board[r][c]) {
+        board[r + 1][c] = (parseInt(board[r][c]) + parseInt(board[r + 1][c]));
+        board[r][c] = 0;
+      }
+    }
+  }
+}
+
+function moveTilesRight() {
+  for (var r = board.length - 1; r >= 0; r--) {
+    for (var c = board.length - 1; c >= 0; c--) {
+      if (c !== 3 && board[r][c] !== 0 && board[r][c + 1] === 0) {
+        board[r][c + 1] = board[r][c];
+        board[r][c] = 0;
+      }
+    }
+  }
+}
+
+function combineTilesRight() {
+  for (var r = board.length - 1; r > 0; r--) {
+    for (var c = board.length - 1; c >= 0; c--) {
+      if (c !== 3 && board[r][c] !== 0 && board[r][c + 1] === board[r][c]) {
+        board[r][c + 1] = (parseInt(board[r][c]) + parseInt(board[r][c + 1]));
+        board[r][c] = 0;
+      }
+    }
+  }
+}
+
+function moveTilesLeft() {
+
+  for (var r = 0; r < board.length; r++) {
+    for (var c = 0; c < board[r].length; c++) {
+      if (c !== 0 && board[r][c] !== 0 && board[r][c - 1] === 0) {
+        board[r][c - 1] = board[r][c];
+        board[r][c] = 0;
+      }
+    }
+  }
+}
+
+function combineTilesLeft() {
+  for (var r = 0; r < board.length; r++) {
+    for (var c = 0; c < board[r].length; c++) {
+      if (c !== 0 && board[r][c] !== 0 && board[r][c - 1] === board[r][c]) {
+        board[r][c - 1] = (parseInt(board[r][c]) + parseInt(board[r][c - 1]));
+        board[r][c] = 0;
+      }
+    }
+  }
+}
