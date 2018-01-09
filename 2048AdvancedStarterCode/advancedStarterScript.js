@@ -1,6 +1,6 @@
 
 //2D array initialized with sample values. To get a blank board initialize all the values to zero
-var board = [[2,4,8,16],[32,64,128,512],[1024,0,0,0],[0,0,0,0]];
+var board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[2,2,2,2]];
 
 var UP_ARROW = '38';
 var DOWN_ARROW = '40';
@@ -10,6 +10,7 @@ var R = '82';
 
 //As soon as webpage loads run these two functions
 $(document).ready(function(){
+	addTile();
 	printBoard();
 	console.log("Loaded webpage"); //how you do print statements in javascript
 });
@@ -72,6 +73,7 @@ function printBoard(){
 		}
 	}
 }
+
 //show students an ascii conversion tool.
 document.onkeydown = function(e){
 	console.log(e.keyCode);
@@ -79,19 +81,23 @@ document.onkeydown = function(e){
 	if (e.keyCode == UP_ARROW) {
 		moveTilesUp();
 		combineTilesUp();
+		addTile();
 		console.log("Pressed up");
 	} else if (e.keyCode == DOWN_ARROW) {
 		// down arrow
 		moveTilesDown();
 		combineTilesDown();
+		addTile();
 		console.log("Pressed down");
 	} else if (e.keyCode == RIGHT_ARROW) {
 		moveTilesRight();
 		combineTilesRight();
+		addTile();
 		console.log("Pressed right");
 	} else if (e.keyCode == LEFT_ARROW) {
 		moveTilesLeft();
 		combineTilesLeft();
+		addTile();
 		console.log("Pressed left");
 	} else if (e.keyCode == R) {
 		//clearBoard();
@@ -99,6 +105,32 @@ document.onkeydown = function(e){
 	}
 	printBoard();
 };
+
+function isFull() {
+  for (var r = 0; r < board.length; r++) {
+    for (var c = 0; c < board.length; c++) {
+      if (board[r][c] == 0) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+function addTile() {
+  //place a 2 on a random spot in the board
+
+  if (isFull() == false) {
+    do {
+      var x = Math.round(Math.random() * 3);
+      var y = Math.round(Math.random() * 3);
+
+    } while (board[x][y] !== 0);
+
+    board[x][y] = 2;
+  }
+}
+
 
 function moveTilesUp() {
   for (var r = 0; r < board.length; r++) {
@@ -109,13 +141,13 @@ function moveTilesUp() {
       }
     }
   }
-}
+ }
 
 function combineTilesUp() {
   for (var r = board.length - 1; r > 0; r--) {
     for (var c = board.length - 1; c >= 0; c--) {
       if (r !== 0 && board[r][c] !== 0 && board[r - 1][c] === board[r][c]) {
-        board[r - 1][c] = (parseInt(board[r][c]) + parseInt(board[r - 1][c]));
+        board[r - 1][c] = board[r][c] + board[r - 1][c];
         board[r][c] = 0;
       }
     }
@@ -138,7 +170,7 @@ function combineTilesDown() {
   for (var r = board.length - 1; r >= 0; r--) {
     for (var c = board.length - 1; c >= 0; c--) {
       if (r !== 3 && board[r][c] !== 0 && board[r + 1][c] === board[r][c]) {
-        board[r + 1][c] = (parseInt(board[r][c]) + parseInt(board[r + 1][c]));
+        board[r + 1][c] = board[r][c] + board[r + 1][c];
         board[r][c] = 0;
       }
     }
@@ -160,7 +192,7 @@ function combineTilesRight() {
   for (var r = board.length - 1; r > 0; r--) {
     for (var c = board.length - 1; c >= 0; c--) {
       if (c !== 3 && board[r][c] !== 0 && board[r][c + 1] === board[r][c]) {
-        board[r][c + 1] = (parseInt(board[r][c]) + parseInt(board[r][c + 1]));
+        board[r][c + 1] = board[r][c] + board[r][c + 1];
         board[r][c] = 0;
       }
     }
@@ -183,9 +215,55 @@ function combineTilesLeft() {
   for (var r = 0; r < board.length; r++) {
     for (var c = 0; c < board[r].length; c++) {
       if (c !== 0 && board[r][c] !== 0 && board[r][c - 1] === board[r][c]) {
-        board[r][c - 1] = (parseInt(board[r][c]) + parseInt(board[r][c - 1]));
+        board[r][c - 1] = board[r][c] + board[r][c - 1];
         board[r][c] = 0;
       }
     }
   }
+}
+
+function cantCombineTilesUp() {
+  for (var r = board.length - 1; r > 0; r--) {
+    for (var c = board.length - 1; c >= 0; c--) {
+      if (r !== 0 && board[r][c] !== 0 && board[r - 1][c] === board[r][c]) {
+        return false;
+      }
+    }
+  }
+}
+
+function cantCombineTilesDown() {
+  for (var r = board.length - 1; r >= 0; r--) {
+    for (var c = board.length - 1; c >= 0; c--) {
+      if (r !== 3 && board[r][c] !== 0 && board[r + 1][c] === board[r][c]) {
+        return false;
+      }
+    }
+  }
+}
+
+function cantCombineTilesRight() {
+  for (var r = board.length - 1; r > 0; r--) {
+    for (var c = board.length - 1; c >= 0; c--) {
+      if (c !== 3 && board[r][c] !== 0 && board[r][c + 1] === board[r][c]) {
+        return false;
+      }
+    }
+  }
+}
+
+function cantCombineTilesLeft() {
+  for (var r = 0; r < board.length; r++) {
+    for (var c = 0; c < board[r].length; c++) {
+      if (c !== 0 && board[r][c] !== 0 && board[r][c - 1] === board[r][c]) {
+        return false;
+      }
+    }
+  }
+}
+
+function isGameOver() {
+	if (cantCombineTilesUp && cantCombineTilesDown && cantCombineTilesRight && cantCombineTilesLeft) {
+		console.log("You lost!")
+	}
 }
