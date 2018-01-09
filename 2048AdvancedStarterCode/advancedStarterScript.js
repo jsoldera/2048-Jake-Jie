@@ -1,6 +1,6 @@
 
 //2D array initialized with sample values. To get a blank board initialize all the values to zero
-var board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[2,2,2,2]];
+var board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
 
 var UP_ARROW = '38';
 var DOWN_ARROW = '40';
@@ -104,6 +104,7 @@ document.onkeydown = function(e){
 		//addTile();
 	}
 	printBoard();
+	isGameOver();
 };
 
 function isFull() {
@@ -135,9 +136,10 @@ function addTile() {
 function moveTilesUp() {
   for (var r = 0; r < board.length; r++) {
     for (var c = 0; c < board[r].length; c++) {
-      if (r !== 0 && board[r][c] !== 0 && board[r - 1][c] === 0) {
+      while (r !== 0 && board[r][c] !== 0 && board[r - 1][c] === 0) {
         board[r - 1][c] = board[r][c];
         board[r][c] = 0;
+				r--;
       }
     }
   }
@@ -149,6 +151,9 @@ function combineTilesUp() {
       if (r !== 0 && board[r][c] !== 0 && board[r - 1][c] === board[r][c]) {
         board[r - 1][c] = board[r][c] + board[r - 1][c];
         board[r][c] = 0;
+				if (r !== 0) {
+					moveTilesUp();
+				}
       }
     }
   }
@@ -158,9 +163,10 @@ function moveTilesDown() {
 
   for (var r = board.length - 1; r >= 0; r--) {
     for (var c = board.length - 1; c >= 0; c--) {
-      if (r !== 3 && board[r][c] !== 0 && board[r + 1][c] === 0) {
+      while (r !== 3 && board[r][c] !== 0 && board[r + 1][c] === 0) {
         board[r + 1][c] = board[r][c];
         board[r][c] = 0;
+				r++;
       }
     }
   }
@@ -172,6 +178,9 @@ function combineTilesDown() {
       if (r !== 3 && board[r][c] !== 0 && board[r + 1][c] === board[r][c]) {
         board[r + 1][c] = board[r][c] + board[r + 1][c];
         board[r][c] = 0;
+				if (r !== 3) {
+					moveTilesDown();
+				}
       }
     }
   }
@@ -180,9 +189,10 @@ function combineTilesDown() {
 function moveTilesRight() {
   for (var r = board.length - 1; r >= 0; r--) {
     for (var c = board.length - 1; c >= 0; c--) {
-      if (c !== 3 && board[r][c] !== 0 && board[r][c + 1] === 0) {
+      while (c !== 3 && board[r][c] !== 0 && board[r][c + 1] === 0) {
         board[r][c + 1] = board[r][c];
         board[r][c] = 0;
+				c++;
       }
     }
   }
@@ -194,6 +204,9 @@ function combineTilesRight() {
       if (c !== 3 && board[r][c] !== 0 && board[r][c + 1] === board[r][c]) {
         board[r][c + 1] = board[r][c] + board[r][c + 1];
         board[r][c] = 0;
+				if (c !== 0) {
+					moveTilesRight();
+				}
       }
     }
   }
@@ -203,9 +216,10 @@ function moveTilesLeft() {
 
   for (var r = 0; r < board.length; r++) {
     for (var c = 0; c < board[r].length; c++) {
-      if (c !== 0 && board[r][c] !== 0 && board[r][c - 1] === 0) {
+      while (c !== 0 && board[r][c] !== 0 && board[r][c - 1] === 0) {
         board[r][c - 1] = board[r][c];
         board[r][c] = 0;
+				c--;
       }
     }
   }
@@ -217,6 +231,9 @@ function combineTilesLeft() {
       if (c !== 0 && board[r][c] !== 0 && board[r][c - 1] === board[r][c]) {
         board[r][c - 1] = board[r][c] + board[r][c - 1];
         board[r][c] = 0;
+				if (c !==0) {
+					moveTilesLeft();
+				}
       }
     }
   }
