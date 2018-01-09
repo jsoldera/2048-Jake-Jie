@@ -36,8 +36,8 @@ function clearBoard() {
 
 
 function isFull() {
-  for (var r = 0; r < grid.length - 1; r++) {
-    for (var c = 0; c < grid.length - 1; c++) {
+  for (var r = 0; r < grid.length; r++) {
+    for (var c = 0; c < grid.length; c++) {
       if (grid[r][c] == "x") {
         return false;
       }
@@ -96,12 +96,9 @@ document.onkeydown = function(e) {
     // up arrow
     moveTilesUp();
     combineTilesUp();
-    moveTilesUp();
     addTile();
     console.log("Pressed up");
-  }
-  //double equals sign will convert it for us
-  else if (e.keyCode == DOWN_ARROW) {
+  } else if (e.keyCode == DOWN_ARROW) {
     // down arrow
     moveTilesDown();
     combineTilesDown();
