@@ -1,6 +1,7 @@
 
 //2D array initialized with sample values. To get a blank board initialize all the values to zero
-var board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+var board = [[1024,0,0,0],[1024,0,0,0],[128,0,0,0],[0,0,0,0]];
+//var board = [[2,4,8,16],[32,64,128,256],[512,1024,2048,0],[0,0,0,0]];
 
 var UP_ARROW = '38';
 var DOWN_ARROW = '40';
@@ -8,15 +9,23 @@ var LEFT_ARROW = '37';
 var RIGHT_ARROW = '39';
 var R = '82';
 
+var score = 0
+
 //As soon as webpage loads run these two functions
 $(document).ready(function(){
-	addTile();
+  addTile();
 	printBoard();
 	console.log("Loaded webpage"); //how you do print statements in javascript
 });
 
 function printBoard(){
-
+  if (isGameOver) {
+    console.log("You lose!")
+  }
+  if (isGameWon) {
+    console.log("You win!")
+  }
+	document.getElementById("score").innerHTML = score;
 	for(var i = 0; i < 4; i++){
 		for(var j = 0; j < 4; j++){
 			var boardID = "r"+i+"c"+j;
@@ -61,7 +70,7 @@ function printBoard(){
 					document.getElementById(boardID).style.background = "#f0ca36";
 					break;
 				case 2048:
-					document.getElementById(boardID).style.background = "#ccc0b3";
+					document.getElementById(boardID).style.background = "#fedb14";
 					break;
 				default:
 					//similar to the else statement. If none of the other cases execute, this statement will execute
@@ -74,10 +83,17 @@ function printBoard(){
 	}
 }
 
+// function getScore() {
+// 	for (var r = 0; r < board.length; r++) {
+//     for (var c = 0; c < board.length; c++) {
+// 			score += board[r][c];
+// 		}
+// 	}
+// }
+
 //show students an ascii conversion tool.
 document.onkeydown = function(e){
 	console.log(e.keyCode);
-
 	if (e.keyCode == UP_ARROW) {
 		moveTilesUp();
 		combineTilesUp();
@@ -99,13 +115,10 @@ document.onkeydown = function(e){
 		combineTilesLeft();
 		addTile();
 		console.log("Pressed left");
-	} else if (e.keyCode == R) {
-		//clearBoard();
-		//addTile();
 	}
 	printBoard();
-	isGameOver();
 };
+
 
 function isFull() {
   for (var r = 0; r < board.length; r++) {
@@ -146,14 +159,13 @@ function moveTilesUp() {
  }
 
 function combineTilesUp() {
-  for (var r = board.length - 1; r > 0; r--) {
+  for (var r = board.length - 1; r >= 0; r--) {
     for (var c = board.length - 1; c >= 0; c--) {
       if (r !== 0 && board[r][c] !== 0 && board[r - 1][c] === board[r][c]) {
         board[r - 1][c] = board[r][c] + board[r - 1][c];
         board[r][c] = 0;
-				if (r !== 0) {
-					moveTilesUp();
-				}
+        score += board[r][c] + board[r - 1][c]
+				moveTilesUp();
       }
     }
   }
@@ -178,9 +190,8 @@ function combineTilesDown() {
       if (r !== 3 && board[r][c] !== 0 && board[r + 1][c] === board[r][c]) {
         board[r + 1][c] = board[r][c] + board[r + 1][c];
         board[r][c] = 0;
-				if (r !== 3) {
-					moveTilesDown();
-				}
+        score += board[r][c] + board[r + 1][c]
+				moveTilesDown();
       }
     }
   }
@@ -199,14 +210,13 @@ function moveTilesRight() {
 }
 
 function combineTilesRight() {
-  for (var r = board.length - 1; r > 0; r--) {
+  for (var r = board.length - 1; r >= 0; r--) {
     for (var c = board.length - 1; c >= 0; c--) {
       if (c !== 3 && board[r][c] !== 0 && board[r][c + 1] === board[r][c]) {
         board[r][c + 1] = board[r][c] + board[r][c + 1];
         board[r][c] = 0;
-				if (c !== 0) {
-					moveTilesRight();
-				}
+        score += board[r][c] + board[r][c+1]
+				moveTilesRight();
       }
     }
   }
@@ -231,9 +241,8 @@ function combineTilesLeft() {
       if (c !== 0 && board[r][c] !== 0 && board[r][c - 1] === board[r][c]) {
         board[r][c - 1] = board[r][c] + board[r][c - 1];
         board[r][c] = 0;
-				if (c !==0) {
-					moveTilesLeft();
-				}
+        score += board[r][c] + board[r][c-1]
+				moveTilesLeft();
       }
     }
   }
@@ -247,6 +256,7 @@ function cantCombineTilesUp() {
       }
     }
   }
+	return true;
 }
 
 function cantCombineTilesDown() {
@@ -257,16 +267,18 @@ function cantCombineTilesDown() {
       }
     }
   }
+	return true;
 }
 
 function cantCombineTilesRight() {
-  for (var r = board.length - 1; r > 0; r--) {
+  for (var r = board.length - 1; r >= 0; r--) {
     for (var c = board.length - 1; c >= 0; c--) {
       if (c !== 3 && board[r][c] !== 0 && board[r][c + 1] === board[r][c]) {
         return false;
       }
     }
   }
+	return true;
 }
 
 function cantCombineTilesLeft() {
@@ -277,10 +289,20 @@ function cantCombineTilesLeft() {
       }
     }
   }
+	return true;
+}
+
+function isGameWon() {
+  if (board[r][c]=2048) {
+    return true;
+  }
+
+  return false;
 }
 
 function isGameOver() {
 	if (cantCombineTilesUp && cantCombineTilesDown && cantCombineTilesRight && cantCombineTilesLeft) {
-		console.log("You lost!")
-	}
+		return true;
+  }
+  return false;
 }

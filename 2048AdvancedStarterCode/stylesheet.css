@@ -1,25 +1,26 @@
 html, body {
-  margin: 0;
+  margin: 10;
   padding: 10px;
-  background: #faf8ef;
-  color: #ffffff;
+  background: #191919;
+  color: #3D3D3D;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 36px; 
+  font-size: 36px;
   font-weight: bolder;
 }
 
+
 .grid-container {
   position: absolute;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .grid-row {
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
 }
 
 .grid-row:last-child {
-	margin-bottom: 0; 
-}	
+	margin-bottom: 0;
+}
 
 .grid-row:after {
 	content: "";
@@ -32,13 +33,13 @@ html, body {
   height: 106.25px;
   margin-right: 15px;
   float: left;
-  border-radius: 3px;
+  border-radius: 15px;
   text-align: center;
-  background: rgba(238, 228, 218, 0.35); 
+  background: #5d49b8;
 }
 
 .grid-cell:last-child {
-	margin-right: 0; 
+	margin-right: 0;
 }
 
 .game-container {
@@ -46,11 +47,12 @@ html, body {
 	  position: relative;
 	  padding: 15px;
 	  cursor: default;
-	  background: #bbada0;
+	  background: #33266d;
+    //#bbada0
 	  border-radius: 6px;
 	  width: 500px;
 	  height: 500px;
 	  -webkit-box-sizing: border-box;
 	  -moz-box-sizing: border-box;
-	  box-sizing: border-box; 
+	  box-sizing: border-box;
 }
