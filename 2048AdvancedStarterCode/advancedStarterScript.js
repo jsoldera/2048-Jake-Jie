@@ -1,5 +1,5 @@
 //2D array initialized with sample values. To get a blank board initialize all the values to zero
-var board = [[0,2,0,0],[0,2,0,0],[0,1024,0,0],[0,1024,0,0]];
+var board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
 
 //start board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
 //lose board = [[2,4,8,16],[32,64,128,256],[2048,1024,8,16],[256,64,0,0]];
@@ -37,6 +37,7 @@ function printBoard() {
     win = "You win!"
   }
   document.getElementById("title").innerHTML = "2048";
+  document.getElementById("instructions").innerHTML = "Join the numbers and get to the 2048 tile! (Space to restart)";
   document.getElementById("score").innerHTML = "Score: " + score;
   document.getElementById("lose").innerHTML = lose;
   document.getElementById("win").innerHTML = win;

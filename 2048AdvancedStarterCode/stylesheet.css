@@ -49,7 +49,6 @@ html, body {
 	  padding: 15px;
 	  cursor: default;
 	  background: #33266d;
-    #bbada0
 	  border-radius: 6px;
 	  width: 500px;
 	  height: 500px;
@@ -58,10 +57,20 @@ html, body {
 	  box-sizing: border-box;
 }
 
+.title {
+  color: #8767FF;
+  height: 40px
+}
+
+.instructions {
+  color: #472FA4;
+  height: 10px;
+}
+
 .score {
   color: #5E43C4;
+  height: 10px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-
 }
 
 .lose {
@@ -73,8 +82,4 @@ html, body {
   color: #fedb14;
   font-weight: bolder;
   font-family: "Helvetica Neue", Arial, sans-serif;
-}
-
-.title {
-  color: #8767FF;
 }
